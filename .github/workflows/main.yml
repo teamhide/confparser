@@ -19,6 +19,8 @@ jobs:
       with:
         python-version: 3.8.2
 
+    - name: Install PyYAML
+      run: pip3 install PyYAML
     - name: Install pytest
       run: pip3 install pytest
     - name: Testing
