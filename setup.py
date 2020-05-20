@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="confparser",
-    version="0.1.3",
+    version="0.1.4",
     author="teamhide",
     author_email="padocon@naver.com",
     description="Python config parser library",
