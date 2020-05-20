@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from yaml import load, FullLoader
+from yaml import load, Loader
 
 
 class DotDict(defaultdict):
@@ -49,7 +49,7 @@ class ConfParser:
     def load_from_path(self, path: str) -> None:
         try:
             with open(path, 'r') as f:
-                self.config = load(stream=f, Loader=FullLoader)
+                self.config = load(stream=f, Loader=Loader)
         except IOError:
             raise ConfParserException(msg='Read file error')
 
