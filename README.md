@@ -94,3 +94,8 @@ print(config.server.prod.port)
 ## Note
 
 `path` and `conf_dict`, cannot be used at once.
+
+
+[license]: https://img.shields.io/badge/License-MIT-yellow.svg
+[pypi]: https://img.shields.io/pypi/v/confparser
+[pyversions]: https://img.shields.io/pypi/pyversions/confparser
