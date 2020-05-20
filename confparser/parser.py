@@ -3,7 +3,7 @@ from collections import defaultdict
 from yaml import load, Loader
 
 
-class DotDict(defaultdict):
+class ConfParserDict(defaultdict):
     def __init__(self, *args, **kwargs):
         if args or kwargs:
             dict.__init__(self, *args, **kwargs)
@@ -11,8 +11,8 @@ class DotDict(defaultdict):
     def __getattr__(self, key):
         value = self.__getitem__(key)
 
-        if isinstance(value, dict) and not isinstance(value, DotDict):
-            value = DotDict(value)
+        if isinstance(value, dict) and not isinstance(value, ConfParserDict):
+            value = ConfParserDict(value)
 
         return value
 
@@ -44,6 +44,9 @@ class ConfParser:
         if path:
             self.load_from_path(path=path)
         elif conf_dict:
+            if not isinstance(conf_dict, dict):
+                raise ConfParserException(msg='type of conf_dict must be dict')
+
             self.config = conf_dict
 
     def load_from_path(self, path: str) -> None:
@@ -53,5 +56,5 @@ class ConfParser:
         except IOError:
             raise ConfParserException(msg='Read file error')
 
-    def to_obj(self) -> 'DotDict':
-        return DotDict(config=self.config).config
+    def to_obj(self) -> ConfParserDict:
+        return ConfParserDict(config=self.config).config

@@ -1,7 +1,7 @@
 import pytest
 
 from confparser import ConfParser
-from confparser.parser import ConfParserException, DotDict
+from confparser.parser import ConfParserException, ConfParserDict
 
 
 def test_parser_with_do_not_exist_path():
@@ -17,6 +17,20 @@ def test_parser_with_none_path_and_none_conf_dict():
 def test_parser_with_path_and_conf_dict():
     with pytest.raises(ConfParserException):
         ConfParser(path='./config.yml', conf_dict={'debug': True})
+
+
+def test_parser_conf_dict_type_is_not_dict():
+    with pytest.raises(ConfParserException):
+        ConfParser(conf_dict=1)
+
+    with pytest.raises(ConfParserException):
+        ConfParser(conf_dict='test')
+
+    with pytest.raises(ConfParserException):
+        ConfParser(conf_dict=())
+
+    with pytest.raises(ConfParserException):
+        ConfParser(conf_dict=[])
 
 
 def test_parser_with_conf_dict():
@@ -35,11 +49,11 @@ def test_parser_with_conf_dict():
             }
         },
     ).to_obj()
-    assert isinstance(config, DotDict)
+    assert isinstance(config, ConfParserDict)
     assert config.debug is True
-    assert isinstance(config.server, DotDict)
-    assert isinstance(config.server.dev, DotDict)
-    assert isinstance(config.server.prod, DotDict)
+    assert isinstance(config.server, ConfParserDict)
+    assert isinstance(config.server.dev, ConfParserDict)
+    assert isinstance(config.server.prod, ConfParserDict)
     assert config.server.dev.debug is True
     assert config.server.dev.port == 8000
     assert config.server.prod.debug is False
@@ -49,11 +63,11 @@ def test_parser_with_conf_dict():
 def test_parser_with_path():
     config = ConfParser(path='./config.yml').to_obj()
 
-    assert isinstance(config, DotDict)
+    assert isinstance(config, ConfParserDict)
     assert config.debug is True
-    assert isinstance(config.server, DotDict)
-    assert isinstance(config.server.dev, DotDict)
-    assert isinstance(config.server.prod, DotDict)
+    assert isinstance(config.server, ConfParserDict)
+    assert isinstance(config.server.dev, ConfParserDict)
+    assert isinstance(config.server.prod, ConfParserDict)
     assert config.server.dev.debug is True
     assert config.server.dev.port == 8000
     assert config.server.prod.debug is False
