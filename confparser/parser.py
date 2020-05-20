@@ -24,22 +24,34 @@ class DotDict(defaultdict):
 
 
 class ConfParserException(Exception):
-    pass
+    def __init__(self, msg: str):
+        super().__init__(msg)
 
 
 class ConfParser:
-    def __init__(self, path=None):
+    def __init__(self, path: str = None, conf_dict: dict = None):
         self.config = None
 
-        if path:
-            self.load(path=path)
+        if not path and not conf_dict:
+            raise ConfParserException(
+                msg='Either path or conf_dict must be present',
+            )
+        elif path and conf_dict:
+            raise ConfParserException(
+                msg='path and conf_dict cannot coexist',
+            )
 
-    def load(self, path: str) -> None:
+        if path:
+            self.load_from_path(path=path)
+        elif conf_dict:
+            self.config = conf_dict
+
+    def load_from_path(self, path: str) -> None:
         try:
             with open(path, 'r') as f:
                 self.config = load(stream=f, Loader=FullLoader)
         except IOError:
-            raise ConfParserException
+            raise ConfParserException(msg='Read file error')
 
     def to_obj(self) -> 'DotDict':
         return DotDict(config=self.config).config

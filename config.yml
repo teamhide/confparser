@@ -1,0 +1,8 @@
+debug: True
+server:
+  dev:
+    debug: True
+    port: 8000
+  prod:
+    debug: False
+    port: 80

@@ -4,7 +4,11 @@
 [![pyversions]](http://pypi.python.org/pypi/confparser)
 ![badge](https://action-badges.now.sh/teamhide/confparser)
 
-confparser is a pure yml parser for python
+confparser is a pure config parser by yml file or dictionary.
+
+In confparser, you can easily access to value through dot notation.
+
+Like, `conf.debug`, `conf.server.dev.debug`
 
 ## Installation
 
@@ -13,6 +17,8 @@ pip3 install confparser
 ```
 
 ## Usage
+
+### Config by .yml file
 
 Create yml file
 
@@ -48,3 +54,43 @@ print(config.server.prod.debug)
 print(config.server.prod.port)  
 # 80
 ```
+
+### Config by dictionary
+
+Import confparser and insert your dictionary.
+```python
+from confparser import ConfParser
+
+conf_dict = {
+    'debug': True,
+    'server': {
+        'dev': {
+            'debug': True,
+            'port': 8000,
+        },
+        'prod': {
+            'debug': False,
+            'port': 80,
+        },
+    }
+}
+config = ConfParser(conf_dict=conf_dict).to_obj()
+print(config.debug)  
+# True
+
+print(config.server.dev.debug)  
+# True
+
+print(config.server.dev.port)  
+# 8000
+
+print(config.server.prod.debug)  
+# False
+
+print(config.server.prod.port)  
+# 80
+```
+
+## Note
+
+`path` and `conf_dict`, cannot be used at once.
