@@ -4,11 +4,11 @@
 [![pyversions]](http://pypi.python.org/pypi/confparser)
 ![badge](https://action-badges.now.sh/teamhide/confparser)
 
-confparser is a pure config parser by yml file or dictionary.
+confparser is a config parser by yml file or dictionary.
 
 In confparser, you can easily access to value through dot notation.
 
-Like, `conf.debug`, `conf.server.dev.debug`
+Like, `conf.debug`, `conf.server.dev.debug`.
 
 ## Installation
 
@@ -39,8 +39,18 @@ from confparser import ConfParser
 
 
 config = ConfParser(path='./config.yml').to_obj()
+
+print(config)
+# {'debug': True, 'server': {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}}
+
 print(config.debug)  
 # True
+
+print(config.server)
+# {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}
+
+print(config.server.dev)
+# {'debug': True, 'port': 8000}
 
 print(config.server.dev.debug)  
 # True
@@ -75,8 +85,18 @@ conf_dict = {
     }
 }
 config = ConfParser(conf_dict=conf_dict).to_obj()
+
+print(config)
+# {'debug': True, 'server': {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}}
+
 print(config.debug)  
 # True
+
+print(config.server)
+# {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}
+
+print(config.server.dev)
+# {'debug': True, 'port': 8000}
 
 print(config.server.dev.debug)  
 # True
@@ -93,7 +113,7 @@ print(config.server.prod.port)
 
 ## Note
 
-`path` and `conf_dict`, cannot be used at once.
+`path` and `conf_dict` cannot be used at once.
 
 
 [license]: https://img.shields.io/badge/License-MIT-yellow.svg

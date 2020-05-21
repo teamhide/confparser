@@ -1,26 +1,32 @@
-from collections import defaultdict
-
 from yaml import load, Loader
 
 
-class ConfParserDict(defaultdict):
-    def __init__(self, *args, **kwargs):
-        if args or kwargs:
-            dict.__init__(self, *args, **kwargs)
+class ConfParserDict(dict):
+    def __init__(self, config):
+        super().__init__(config)
+        if isinstance(config, dict):
+            for k, v in config.items():
+                if not isinstance(v, dict):
+                    self[k] = v
+                else:
+                    self.__setattr__(k, ConfParserDict(v))
 
-    def __getattr__(self, key):
-        value = self.__getitem__(key)
-
-        if isinstance(value, dict) and not isinstance(value, ConfParserDict):
-            value = ConfParserDict(value)
-
-        return value
+    def __getattr__(self, attr):
+        return self.get(attr)
 
     def __setattr__(self, key, value):
-        return self.__setitem__(key, value)
+        self.__setitem__(key, value)
 
-    def __delattr__(self, key):
-        return self.__delitem__(key)
+    def __setitem__(self, key, value):
+        super().__setitem__(key, value)
+        self.__dict__.update({key: value})
+
+    def __delattr__(self, item):
+        self.__delitem__(item)
+
+    def __delitem__(self, key):
+        super().__delitem__(key)
+        del self.__dict__[key]
 
 
 class ConfParserException(Exception):
@@ -57,4 +63,4 @@ class ConfParser:
             raise ConfParserException(msg='Read file error')
 
     def to_obj(self) -> ConfParserDict:
-        return ConfParserDict(config=self.config).config
+        return ConfParserDict(config=self.config)
