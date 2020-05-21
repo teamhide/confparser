@@ -50,10 +50,14 @@ def test_parser_with_conf_dict():
         },
     ).to_obj()
     assert isinstance(config, ConfParserDict)
+    assert config == {'debug': True, 'server': {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}}
     assert config.debug is True
     assert isinstance(config.server, ConfParserDict)
+    assert config.server == {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}
     assert isinstance(config.server.dev, ConfParserDict)
+    assert config.server.dev == {'debug': True, 'port': 8000}
     assert isinstance(config.server.prod, ConfParserDict)
+    assert config.server.prod == {'debug': False, 'port': 80}
     assert config.server.dev.debug is True
     assert config.server.dev.port == 8000
     assert config.server.prod.debug is False
@@ -64,10 +68,14 @@ def test_parser_with_path():
     config = ConfParser(path='./config.yml').to_obj()
 
     assert isinstance(config, ConfParserDict)
+    assert config == {'debug': True, 'server': {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}}
     assert config.debug is True
     assert isinstance(config.server, ConfParserDict)
+    assert config.server == {'dev': {'debug': True, 'port': 8000}, 'prod': {'debug': False, 'port': 80}}
     assert isinstance(config.server.dev, ConfParserDict)
+    assert config.server.dev == {'debug': True, 'port': 8000}
     assert isinstance(config.server.prod, ConfParserDict)
+    assert config.server.prod == {'debug': False, 'port': 80}
     assert config.server.dev.debug is True
     assert config.server.dev.port == 8000
     assert config.server.prod.debug is False
