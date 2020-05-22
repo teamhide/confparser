@@ -115,6 +115,12 @@ print(config.server.prod.port)
 
 `path` and `conf_dict` cannot be used at once.
 
+## Dependencies
+
+To use parsing yml file, `pyyaml` is needed.
+
+But it will be install automatically with confparser so you don't have to install manually.
+
 
 [license]: https://img.shields.io/badge/License-MIT-yellow.svg
 [pypi]: https://img.shields.io/pypi/v/confparser
