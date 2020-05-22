@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="confparser",
-    version="0.1.5",
+    version="0.1.6",
     author="teamhide",
     author_email="padocon@naver.com",
     description="Python config parser library",
@@ -27,10 +27,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'pyyaml',
-    ],
-    dependency_links=[
-        'git+https://github.com/yaml/pyyaml.git',
+        'pyyaml==5.3.1',
     ],
     python_requires='>=3.4',
 )
