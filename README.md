@@ -3,6 +3,7 @@
 [![pypi]](https://pypi.org/project/confparser/)
 [![pyversions]](http://pypi.python.org/pypi/confparser)
 ![badge](https://action-badges.now.sh/teamhide/confparser)
+[![Downloads](https://pepy.tech/badge/confparser)](https://pepy.tech/project/confparser)
 
 confparser is a config parser by yml file or dictionary.
 
