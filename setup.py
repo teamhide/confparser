@@ -27,7 +27,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'pyyaml==5.3.1',
+        'pyyaml==5.4',
     ],
     python_requires='>=3.4',
 )
